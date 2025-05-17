@@ -69,7 +69,7 @@ const setupMockEnvironment = async () => {
             selectionChanged: () => {},
           },
           ready: () => {
-            console.log("Telegram WebApp is ready");
+            console.log("Telegram WebApp ready() function called - hiding loading placeholder");
           },
           expand: () => {},
           close: () => {},

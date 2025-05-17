@@ -31,13 +31,12 @@ export function init(options: InitOptions = {}): boolean {
     initSDK();
     if (options.debug) console.log('SDK initialized');
 
-    // Сигнализируем что приложение готово - КРИТИЧЕСКИ ВАЖНО для Telegram
+    // Монтируем miniApp компонент, но не вызываем ready пока
     try {
       miniApp.mount();
-      miniApp.ready();
-      if (options.debug) console.log('Mini app initialized and ready');
+      if (options.debug) console.log('Mini app mounted');
     } catch (error) {
-      console.error('Ошибка инициализации mini app:', error);
+      console.error('Ошибка монтирования mini app:', error);
     }
     
     // Initialize viewport
@@ -85,6 +84,19 @@ export function init(options: InitOptions = {}): boolean {
       }
     } catch (error) {
       console.error('Ошибка применения темы:', error);
+    }
+
+    // Теперь сигнализируем что приложение готово к отображению
+    try {
+      // Проверяем доступность метода ready() согласно современным API Telegram
+      if (miniApp.ready && typeof miniApp.ready === 'function') {
+        miniApp.ready();
+        if (options.debug) console.log('miniApp.ready() called successfully');
+      } else {
+        console.warn('miniApp.ready is not available, skipping ready call');
+      }
+    } catch (error) {
+      console.error('Ошибка вызова miniApp.ready():', error);
     }
 
     // Initialize debug tools if needed

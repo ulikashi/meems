@@ -21,17 +21,23 @@ function App() {
     try {
       // Используем опцию debug для включения отладочной информации
       const isDev = process.env.NODE_ENV === 'development';
-      const success = init({ 
-        eruda: isDev, 
-        debug: isDev 
-      });
       
-      if (success) {
-        console.log('SDK initialized successfully');
-        setInitialized(true);
-      } else {
-        setError('Не удалось инициализировать Telegram SDK');
-      }
+      // Небольшая задержка для гарантии загрузки DOM перед инициализацией
+      const initTimeout = setTimeout(() => {
+        const success = init({ 
+          eruda: isDev, 
+          debug: isDev 
+        });
+        
+        if (success) {
+          console.log('SDK initialized successfully');
+          setInitialized(true);
+        } else {
+          setError('Не удалось инициализировать Telegram SDK');
+        }
+      }, 50);
+      
+      return () => clearTimeout(initTimeout);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Неизвестная ошибка';
       console.error('Error initializing SDK:', err);
