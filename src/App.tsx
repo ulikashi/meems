@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { retrieveLaunchParams } from '@telegram-apps/sdk-react';
+import { useState, useEffect } from 'react';
 import MemeGallery from './components/MemeGallery';
 import MemeEditor from './components/MemeEditor';
 import { init } from './init';

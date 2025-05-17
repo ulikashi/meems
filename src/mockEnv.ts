@@ -53,15 +53,15 @@ const setupMockEnvironment = async () => {
             hide: () => {},
             enable: () => {},
             disable: () => {},
-            onClick: (callback) => {},
-            offClick: (callback) => {},
+            onClick: (_: () => void) => {},
+            offClick: (_: () => void) => {},
           },
           BackButton: {
             isVisible: false,
             show: () => {},
             hide: () => {},
-            onClick: (callback) => {},
-            offClick: (callback) => {},
+            onClick: (_: () => void) => {},
+            offClick: (_: () => void) => {},
           },
           HapticFeedback: {
             impactOccurred: () => {},
@@ -73,25 +73,25 @@ const setupMockEnvironment = async () => {
           },
           expand: () => {},
           close: () => {},
-          onEvent: (eventName, callback) => {},
-          offEvent: (eventName, callback) => {},
-          sendData: (data) => {
-            console.log("Sending data to Telegram:", data);
+          onEvent: (_eventName: string, _callback: () => void) => {},
+          offEvent: (_eventName: string, _callback: () => void) => {},
+          sendData: (_data: string) => {
+            console.log("Sending data to Telegram:", _data);
           },
-          openLink: (url) => {
-            window.open(url, "_blank");
+          openLink: (_url: string) => {
+            window.open(_url, "_blank");
           },
-          showPopup: (params, callback) => {
+          showPopup: (params: { message: string }, _callback?: () => void) => {
             alert(params.message || 'Popup');
-            if (callback) callback();
+            if (_callback) _callback();
           },
-          showAlert: (message, callback) => {
+          showAlert: (message: string, _callback?: () => void) => {
             alert(message);
-            if (callback) callback();
+            if (_callback) _callback();
           },
-          showConfirm: (message, callback) => {
+          showConfirm: (message: string, _callback?: (result: boolean) => void) => {
             const result = confirm(message);
-            if (callback) callback(result);
+            if (_callback) _callback(result);
           },
         }
       };
