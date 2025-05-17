@@ -30,6 +30,15 @@ export function init(options: InitOptions = {}): boolean {
     // Initialize SDK
     initSDK();
     if (options.debug) console.log('SDK initialized');
+
+    // Сигнализируем что приложение готово - КРИТИЧЕСКИ ВАЖНО для Telegram
+    try {
+      miniApp.mount();
+      miniApp.ready();
+      if (options.debug) console.log('Mini app initialized and ready');
+    } catch (error) {
+      console.error('Ошибка инициализации mini app:', error);
+    }
     
     // Initialize viewport
     try {
@@ -54,15 +63,6 @@ export function init(options: InitOptions = {}): boolean {
       if (options.debug) console.log('Back button initialized');
     } catch (error) {
       console.error('Ошибка инициализации кнопки "Назад":', error);
-    }
-
-    // Initialize mini app
-    try {
-      miniApp.mount();
-      miniApp.ready();
-      if (options.debug) console.log('Mini app initialized and ready');
-    } catch (error) {
-      console.error('Ошибка инициализации mini app:', error);
     }
 
     // Apply theme variables
